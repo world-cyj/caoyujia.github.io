@@ -1,4 +1,5 @@
 (function () {
+  const projectRoot = window.location.pathname.startsWith("/caoyujia.github.io") ? "/caoyujia.github.io" : "";
   const root = document.documentElement;
   const body = document.body;
   const themeButton = document.querySelector("[data-theme-toggle]");
@@ -40,6 +41,9 @@
 
   overlay?.addEventListener("click", closeMenu);
   document.querySelectorAll(".nav-link").forEach((link) => link.addEventListener("click", closeMenu));
+  document.querySelectorAll('a[href^="/"]').forEach((link) => {
+    link.setAttribute("href", projectRoot + link.getAttribute("href"));
+  });
 
   searchInput?.addEventListener("input", function (event) {
     const query = event.target.value.trim().toLowerCase();
@@ -55,7 +59,7 @@
 
   searchInput?.addEventListener("keydown", function (event) {
     if (event.key === "Enter" && !postCards.length && searchInput.value.trim()) {
-      window.location.href = `/?q=${encodeURIComponent(searchInput.value.trim())}`;
+      window.location.href = `${projectRoot}/?q=${encodeURIComponent(searchInput.value.trim())}`;
     }
   });
 
